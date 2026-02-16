@@ -21,7 +21,7 @@ class RefreshTokenView(APIView):
                 refresh.set_jti()
                 response = Response({
                     'result': 'success',
-                    'access_token': str(refresh.access_token),
+                    'access': str(refresh.access_token),
                 })
 
                 response.set_cookie(
