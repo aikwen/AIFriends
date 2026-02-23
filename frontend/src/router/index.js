@@ -7,6 +7,7 @@ import LoginIndex from "@/views/user/account/LoginIndex.vue";
 import RegisterIndex from "@/views/user/account/RegisterIndex.vue";
 import SpaceIndex from "@/views/user/space/SpaceIndex.vue";
 import ProfileIndex from "@/views/profile/ProfileIndex.vue";
+import api from "@/js/http/api.js";
 import {useUserStore} from "@/stores/user.js";
 
 
@@ -88,8 +89,23 @@ const router = createRouter({
   ],
 })
 
-router.beforeEach((to, from) => {
+router.beforeEach( async(to, from) => {
   const user = useUserStore()
+  // 重定向之前先拉取用户信息
+  if (!user.hasPulledUserInfo) {
+    try {
+      const res = await api.get("/api/user/account/get_user_info/")
+      const data = res.data
+      if (data.result === 'success') {
+        user.setUserInfo(data)
+      }
+    } catch (error) {
+      console.log('获取用户信息失败或未登录:', error)
+    } finally {
+      // 无论成功失败，都标记为已拉取，避免后续路由切换重复请求
+      user.setHasPulledUserInfo(true)
+    }
+  }
   if (to.meta.needLogin && ! user.isLogin()) {
     return {
       name: 'user-account-login-index',
