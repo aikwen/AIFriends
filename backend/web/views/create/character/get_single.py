@@ -10,7 +10,7 @@ class GetSingleCharacterView(APIView):
     def get(self, request):
         try:
             character_id = request.query_params.get('character_id')
-            character = Character.objects.get(id=character_id, auther__user=request.user)
+            character = Character.objects.get(id=character_id, author__user=request.user)
             return Response({
                 'result':'success',
                 'character': {
