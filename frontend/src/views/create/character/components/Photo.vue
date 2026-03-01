@@ -2,7 +2,7 @@
 import Croppie from 'croppie'
 import 'croppie/croppie.css'
 
-import {onBeforeUnmount, ref, useTemplateRef, watch} from "vue";
+import {nextTick, onBeforeUnmount, ref, useTemplateRef, watch} from "vue";
 import CameralIcon from "@/views/profile/components/icons/CameralIcon.vue";
 import modal from "daisyui/components/modal/index.js";
 
@@ -19,6 +19,7 @@ let croppie = null
 
 async function openModal(photo){
   modalRef.value.showModal()
+  await nextTick()
 
   if (!croppie) {
       croppie = new Croppie(croppieRef.value, {  // 创建croppie对象
