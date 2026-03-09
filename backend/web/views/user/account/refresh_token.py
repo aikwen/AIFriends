@@ -37,6 +37,7 @@ class RefreshTokenView(APIView):
 
             return Response({
                 'result': 'success',
+                'access': str(refresh.access_token),
             })
         except:
             return Response({

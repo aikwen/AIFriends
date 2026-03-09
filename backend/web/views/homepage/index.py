@@ -8,7 +8,7 @@ from web.models.character import Character
 class HomePageIndexView(APIView):
     def get(self, request):
         try:
-            items_count = int(request.query_params.get('items_count', 0))
+            items_count = int(request.query_params.get('items_count'))
             search_query = request.query_params.get('search_query', '').strip()
             if search_query:
                 queryset = Character.objects.filter(
