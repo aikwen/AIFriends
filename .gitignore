@@ -180,3 +180,6 @@ staticfiles/
 static/
 
 .env
+
+backend/web/documents/lancedb_storage
+backend/web/documents/data.txt
